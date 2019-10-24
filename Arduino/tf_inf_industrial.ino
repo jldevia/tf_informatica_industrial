@@ -112,7 +112,7 @@ const double M_CONV_CT = (double) CT_OUT_8_H / ((double) CT_IN_10_H - (double) C
  */
 
 // El rango de variacion de distancia (cm) para el nivel
-double distancia_h = 24;   // max cm
+double distancia_h = 22;   // max cm
 const double distancia_l = 0;    // min cm
 
 
@@ -178,12 +178,19 @@ int f_perc_px(int nivel_porcentaje) {
  */
 
 //Pendiente
-const double m_cm_ct8 = (double) (CT_OUT_8_L - CT_OUT_8_H) / (double) (distancia_h - distancia_l);
+//const double m_cm_ct8 = (double) (CT_OUT_8_L - CT_OUT_8_H) / (double) (distancia_h - distancia_l);
+const double m_cm_ct8 = (double) ( CT_OUT_8_H - CT_OUT_8_L) / (double) (distancia_h - distancia_l); 
 
 // Funcion para la ecuacion de la recta, devuelve las cuentas (8 bit) del PWM que representa el nivel del tacho
-int f_cm_ct8(double distancia_sensor) {
+/*int f_cm_ct8(double distancia_sensor) {
   return (m_cm_ct8) * ( distancia_sensor - distancia_l ) + CT_OUT_8_H;
+}*/
+
+int f_cm_ct8(double nivel){
+  return (m_cm_ct8) * nivel;
 }
+
+
 
 /********************************************************************************************************************
  ********************************************************************************************************************
@@ -301,7 +308,7 @@ void imprimir_distancia() {
   //u8g2.drawStr(70,30,str_distancia.c_str());
 
   //Se imprime distancia a tacho vacio
-  String str_distancia = itoa( round(distancia_h) ,char_distancia,base);
+  String str_distancia = itoa( round(nivel) ,char_distancia,base);
   u8g2.drawStr(70,30,str_distancia.c_str());
   
 }
@@ -322,6 +329,7 @@ double calcular_distancia(){
     aux_dist = distancia_h;
   }
 
+  delay(5);
   return aux_dist;
 }
 
