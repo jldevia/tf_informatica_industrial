@@ -319,7 +319,7 @@ double calcular_distancia(){
   long duracion_pulso = 0;
   
   digitalWrite(pinDO_TRIG, HIGH);       // generacion del pulso a enviar
-  delay(1);                             // al pin conectado al trigger
+  delayMicroseconds(10);                 // al pin conectado al trigger
   digitalWrite(pinDO_TRIG, LOW);        // del sensor
   
   duracion_pulso = pulseIn(pinDI_ECO, HIGH);  // con funcion pulseIn se espera un pulso alto en Echo
@@ -329,7 +329,7 @@ double calcular_distancia(){
     aux_dist = distancia_h;
   }
 
-  delay(5);
+  delay(50);
   return aux_dist;
 }
 
